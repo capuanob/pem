@@ -13,7 +13,7 @@ def TestOneInput(data):
     fdp = fuzz_helpers.EnhancedFuzzedDataProvider(data)
     try:
         if fdp.ConsumeBool():
-            cert_in = fdp.ConsumeRemainingBytes()
+            cert_in = fdp.ConsumeRemainingString()
             assert cert_in == str(pem.Certificate(cert_in))
         else:
             original_bytes = fdp.ConsumeRemainingBytes()
@@ -24,7 +24,7 @@ def TestOneInput(data):
                 cert.as_bytes()
                 cert.as_text()
                 str(cert)
-    except UnicodeDecodeError:
+    except UnicodeError:
         return -1
 
 
