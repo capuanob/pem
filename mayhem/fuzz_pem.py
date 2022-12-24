@@ -7,6 +7,8 @@ import fuzz_helpers
 with atheris.instrument_imports():
     import pem
 
+
+@atheris.instrument_func
 def TestOneInput(data):
     fdp = fuzz_helpers.EnhancedFuzzedDataProvider(data)
     try:
@@ -19,6 +21,7 @@ def TestOneInput(data):
         str(cert)
     except UnicodeDecodeError:
         return -1
+
 
 def main():
     atheris.Setup(sys.argv, TestOneInput)
