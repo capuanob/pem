@@ -15,10 +15,10 @@ def TestOneInput(data):
         certs = pem.parse(fdp.ConsumeRemainingBytes())
         if not certs:
             return -1
-        cert: pem.Certificate = certs[0]
-        cert.as_bytes()
-        cert.as_text()
-        str(cert)
+        for cert in certs:
+            cert.as_bytes()
+            cert.as_text()
+            str(cert)
     except UnicodeDecodeError:
         return -1
 
