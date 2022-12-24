@@ -1,0 +1,9 @@
+project: pem
+target: fuzz-pem
+testsuite:
+    - file://mayhem/testsuite
+
+cmds:
+  - cmd: /src/mayhem/fuzz_pem.py
+    libfuzzer: true
+    timeout: 5
