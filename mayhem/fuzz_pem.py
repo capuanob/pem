@@ -11,6 +11,7 @@ def TestOneInput(data):
     fdp = fuzz_helpers.EnhancedFuzzedDataProvider(data)
     conv_text = fdp.ConsumeBool()
     for result in pem.parse(fdp.ConsumeRemainingBytes()):
+        str(result)
         if conv_text:
             result.as_text()
         else:
