@@ -9,13 +9,16 @@ with atheris.instrument_imports():
 
 def TestOneInput(data):
     fdp = fuzz_helpers.EnhancedFuzzedDataProvider(data)
-    conv_text = fdp.ConsumeBool()
-    for result in pem.parse(fdp.ConsumeRemainingBytes()):
-        str(result)
-        if conv_text:
-            result.as_text()
-        else:
-            result.as_bytes()
+    try:
+        certs = pem.parse(fdp.ConsumeRemainingBytes())
+        if not certs:
+            return -1
+        cert: pem.Certificate = certs[0]
+        cert.as_bytes()
+        cert.as_text()
+        str(cert)
+    except UnicodeDecodeError:
+        return -1
 
 def main():
     atheris.Setup(sys.argv, TestOneInput)
