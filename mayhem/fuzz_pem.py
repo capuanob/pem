@@ -9,7 +9,12 @@ with atheris.instrument_imports():
 
 def TestOneInput(data):
     fdp = fuzz_helpers.EnhancedFuzzedDataProvider(data)
-    pem.parse(fdp.ConsumeRemainingBytes())
+    conv_text = fdp.ConsumeBool()
+    for result in pem.parse(fdp.ConsumeRemainingBytes()):
+        if conv_text:
+            result.as_text()
+        else:
+            result.as_bytes()
 
 def main():
     atheris.Setup(sys.argv, TestOneInput)
